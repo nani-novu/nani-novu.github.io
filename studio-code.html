@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watching Nonrated | Nice Reels</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+    <!--<script type='text/javascript' src='//principlespite.com/0b/2c/2b/0b2c2ba274192307c4a5d0de881b5965.js'></script>-->
+    <style>
+        /* Styles for the ad overlay */
+        .video-player-wrapper {
+            position: relative; /* Crucial for positioning the overlay */
+        }
+        #ad-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            z-index: 1000; /* Ensure it's on top of the player */
+            display: none; /* Hidden by default */
+        }
+        #ad-overlay iframe {
+            width: 100%;
+            height: 100%;
+            border: none; /* Remove border from the iframe */
+        }
+        /* Style for the "AD" label */
+        #ad-label {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 2px 8px;
+            font-size: 12px;
+            font-family: sans-serif;
+            border-radius: 3px;
+            z-index: 1001; /* Above the iframe */
+        }
+        /* Style for the countdown timer */
+        #ad-timer {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 4px 8px;
+            font-size: 14px;
+            font-family: sans-serif;
+            border-radius: 3px;
+            z-index: 1001; /* Above the iframe */
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <!-- Your Header Content Remains the Same -->
+    </header>
+
+    <!-- Main Content for the Player Page -->
+    <main class="player-page-container">
+        
+        <!-- Main Video Section -->
+        <div class="main-video-section">
+            <div class="video-player-wrapper">
+                
+                <!-- The Ad Overlay Div with Timer and Label -->
+                <div id="ad-overlay">
+                    <div id="ad-label">AD</div>
+                    <div id="ad-timer"></div>
+                    <iframe id="ad-iframe" src="https://communicatefriction.com/jtmg4qm0x9?key=35b7fb6396e9a93ade4ccc35f748394e"></iframe>
+                </div>
+
+                <!-- The Main Video Player -->
+                <script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
+                <video id="video-id"><source src="https://cdv.naijaleakz.com/Nice%20Bitch%20fuckin.mp4" type="video/mp4" /></video>
+                <script>
+                    var myFP = fluidPlayer(
+                        'video-id', {
+                        "layoutControls": {
+                            "controlBar": { "autoHideTimeout": 3, "animated": true, "autoHide": true },
+                            "htmlOnPauseBlock": { "html": null, "height": null, "width": null },
+                            "autoPlay": false, // Autoplay must be false
+                            "mute": true,
+                            "allowTheatre": false,
+                            "playPauseAnimation": true,
+                            "playbackRateEnabled": true,
+                            "allowDownload": false,
+                            "playButtonShowing": true,
+                            "fillToContainer": false,
+                            "posterImage": ""
+                        }
+                    });
+
+                    // Logic to show the ad overlay
+                    let adHasPlayed = false; // Flag to ensure the ad only runs once
+
+                    myFP.on('play', function() {
+                        if (!adHasPlayed) {
+                            myFP.pause(); // Pause video to show ad
+                            
+                            const adOverlay = document.getElementById('ad-overlay');
+                            const adIframe = document.getElementById('ad-iframe');
+                            const adTimer = document.getElementById('ad-timer');
+
+                            adOverlay.style.display = 'block';
+
+                            // The magic happens here: we wait for the iframe to fully load
+                            adIframe.onload = function() {
+                                // Now that the iframe is loaded, start the countdown
+                                let timeLeft = 5;
+                                adTimer.textContent = `Ad ends in ${timeLeft}s`;
+
+                                const countdownInterval = setInterval(function() {
+                                    timeLeft--;
+                                    adTimer.textContent = `Ad ends in ${timeLeft}s`;
+
+                                    if (timeLeft <= 0) {
+                                        clearInterval(countdownInterval); // Stop the countdown
+                                        adOverlay.style.display = 'none'; // Hide the ad
+                                        myFP.play(); // Play the actual video
+                                    }
+                                }, 1000); // Run every second
+                            };
+
+                            adHasPlayed = true; // Set flag so ad doesn't run again
+                        }
+                    });
+                </script>
+            </div>
+            
+            <div class="video-info">
+                 <!-- Your Video Info Content Remains the Same -->
+            </div>
+        </div>
+
+        <!-- Related Videos Sidebar -->
+        <aside class="related-videos-section">
+            <!-- Your Related Videos Content Remains the Same -->
+        </aside>
+    </main>
+
+    <footer class="site-footer">
+        <!-- Your Footer Content Remains the Same -->
+    </footer>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>

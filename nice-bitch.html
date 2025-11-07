@@ -95,7 +95,7 @@
                 <div id="ad-overlay">
                     <div id="ad-label">AD</div>
                     <div id="ad-timer"></div>
-                    <iframe id="ad-iframe" src="https://ey43.com/afu.php?zoneid=8772876&var=8772876&rid=XXz4jyvWNyEJSqRKY8d18w%3D%3D&rhd=false&ab2r=0&sf=1&os=windows&os_version=10.0.0&is_mobile=false&browser_version=141.0.7390.125"></iframe>
+                    <div id="ad-container" class="ad-container"></div>
                 </div>
 
                 <!-- The Main Video Player -->
@@ -127,30 +127,91 @@
                             myFP.pause(); // Pause video to show ad
                             
                             const adOverlay = document.getElementById('ad-overlay');
-                            const adIframe = document.getElementById('ad-iframe');
+                            const adContainer = document.getElementById('ad-container');
                             const adTimer = document.getElementById('ad-timer');
 
                             adOverlay.style.display = 'block';
 
-                            // The magic happens here: we wait for the iframe to fully load
-                            adIframe.onload = function() {
-                                // Now that the iframe is loaded, start the countdown
-                                let timeLeft = 5;
+                            let timeLeft = 5;
+                            let countdownStarted = false;
+                            
+                            function startCountdown() {
+                                if (countdownStarted) return;
+                                countdownStarted = true;
+                                
                                 adTimer.textContent = `Ad ends in ${timeLeft}s`;
-
+                                
                                 const countdownInterval = setInterval(function() {
                                     timeLeft--;
                                     adTimer.textContent = `Ad ends in ${timeLeft}s`;
 
                                     if (timeLeft <= 0) {
-                                        clearInterval(countdownInterval); // Stop the countdown
-                                        adOverlay.style.display = 'none'; // Hide the ad
-                                        myFP.play(); // Play the actual video
+                                        clearInterval(countdownInterval);
+                                        adOverlay.style.display = 'none';
+                                        myFP.play();
                                     }
-                                }, 1000); // Run every second
-                            };
+                                }, 1000);
+                            }
 
-                            adHasPlayed = true; // Set flag so ad doesn't run again
+                            // Create and load JavaScript ad tag
+                            const script = document.createElement('script');
+                            
+                            // Convert your URL to a JavaScript ad tag format
+                            // This is a generic example - you'll need to adapt it to your specific ad network
+                            script.innerHTML = `
+                                (function() {
+                                    var adScript = document.createElement('script');
+                                    adScript.src = 'https://communicatefriction.com/jtmg4qm0x9.js?key=35b7fb6396e9a93ade4ccc35f748394e';
+                                    document.body.appendChild(adScript);
+                                    
+                                    // Create ad container for the ad network to target
+                                    var adDiv = document.createElement('div');
+                                    adDiv.id = 'ad-banner';
+                                    adDiv.style.width = '100%';
+                                    adDiv.style.height = '100%';
+                                    document.getElementById('ad-container').appendChild(adDiv);
+                                    
+                                    // Initialize ad (this part depends on your ad network)
+                                    window.adReady = function() {
+                                        console.log('Ad loaded successfully');
+                                        // Start countdown once ad is ready
+                                        startCountdown();
+                                    };
+                                    
+                                    // Fallback in case ad doesn't load
+                                    setTimeout(function() {
+                                        if (!countdownStarted) {
+                                            console.log('Ad loading timeout, starting countdown');
+                                            startCountdown();
+                                        }
+                                    }, 3000);
+                                })();
+                            `;
+                            
+                            // Alternative: If your ad network provides a specific JS tag
+                            // You would use something like this instead:
+                            /*
+                            script.src = "https://your-ad-network.com/tag.js";
+                            script.onload = function() {
+                                // Initialize ad after script loads
+                                window.showAd('ad-container', {
+                                    onReady: startCountdown,
+                                    onError: function() {
+                                        setTimeout(startCountdown, 1000);
+                                    }
+                                });
+                            };
+                            script.onerror = function() {
+                                setTimeout(startCountdown, 1000);
+                            };
+                            */
+                            
+                            document.head.appendChild(script);
+                            
+                            // Fallback: Start countdown if everything else fails
+                            setTimeout(startCountdown, 5000);
+                            
+                            adHasPlayed = true;
                         }
                     });
                 </script>

@@ -4,54 +4,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Watching Naijaleakz | Nice Bitch fuckin</title>
+    <link rel="preconnect" href="https://communicatefriction.com">
+    <link rel="dns-prefetch" href="https://communicatefriction.com">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
     <!--<script type='text/javascript' src='//principlespite.com/0b/2c/2b/0b2c2ba274192307c4a5d0de881b5965.js'></script>-->
     <style>
-        /* Styles for the ad overlay */
         .video-player-wrapper {
-            position: relative; /* Crucial for positioning the overlay */
+            position: relative;
         }
-        #ad-overlay {
+        .ad-container-style {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background-color: #000;
-            z-index: 1000; /* Ensure it's on top of the player */
-            display: none; /* Hidden by default */
+            z-index: 1000;
+            display: none;
+            font-family: sans-serif;
         }
-        #ad-overlay iframe {
+        .ad-container-style iframe {
             width: 100%;
             height: 100%;
-            border: none; /* Remove border from the iframe */
+            border: none;
+            visibility: hidden;
         }
-        /* Style for the "AD" label */
-        #ad-label {
+        
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
             position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 2px 8px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1001;
+        }
+
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .ad-text {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            color: rgba(255, 255, 255, 0.5);
             font-size: 12px;
-            font-family: sans-serif;
-            border-radius: 3px;
-            z-index: 1001; /* Above the iframe */
+            z-index: 1001;
         }
-        /* Style for the countdown timer */
-        #ad-timer {
+
+        .close-ad-btn {
             position: absolute;
-            bottom: 10px;
-            left: 10px;
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 4px 8px;
-            font-size: 14px;
-            font-family: sans-serif;
-            border-radius: 3px;
-            z-index: 1001; /* Above the iframe */
+            top: 15px;
+            right: 15px;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1001;
+            display: none;
         }
     </style>
 </head>
@@ -91,126 +114,90 @@
         <div class="main-video-section">
             <div class="video-player-wrapper">
                 
-                <!-- The Ad Overlay Div with Timer and Label -->
-                <div id="ad-overlay">
-                    <div id="ad-label">AD</div>
-                    <div id="ad-timer"></div>
-                    <div id="ad-container" class="ad-container"></div>
-                </div>
+                <div id="ad-placeholder"></div>
 
-                <!-- The Main Video Player -->
                 <script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
                 <video id="video-id"><source src="https://cdv.naijaleakz.com/Nice%20Bitch%20fuckin.mp4" type="video/mp4" /></video>
                 <script>
                     var myFP = fluidPlayer(
                         'video-id', {
                         "layoutControls": {
-                            "controlBar": { "autoHideTimeout": 3, "animated": true, "autoHide": true },
-                            "htmlOnPauseBlock": { "html": null, "height": null, "width": null },
-                            "autoPlay": false, // Autoplay must be false
+                            "autoPlay": false,
                             "mute": true,
-                            "allowTheatre": false,
-                            "playPauseAnimation": true,
-                            "playbackRateEnabled": true,
-                            "allowDownload": false,
-                            "playButtonShowing": true,
-                            "fillToContainer": false,
-                            "posterImage": ""
                         }
                     });
 
-                    // Logic to show the ad overlay
-                    let adHasPlayed = false; // Flag to ensure the ad only runs once
+                    function generateRandomId(length = 10) {
+                        let result = '';
+                        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+                        for (let i = 0; i < length; i++) {
+                            result += chars.charAt(Math.floor(Math.random() * chars.length));
+                        }
+                        return result;
+                    }
+
+                    const encodedUrl = "aHR0cHM6Ly9jb21tdW5pY2F0ZWZyaWN0aW9uLmNvbS9qdG1nNHFtMHg5P2tleT0zNWI3ZmI2Mzk2ZTlhOTNhZGU0Y2NjMzVmNzQ4Mzk0ZQ==";
+
+                    function showAd(containerElement, encodedSrc) {
+                        const adContainer = document.createElement('div');
+                        adContainer.id = generateRandomId();
+                        adContainer.className = 'ad-container-style';
+                        
+                        // --- Create all ad elements ---
+                        const loader = document.createElement('div');
+                        loader.className = 'loader';
+                        
+                        const adText = document.createElement('div');
+                        adText.className = 'ad-text';
+                        adText.textContent = 'Advertisement';
+
+                        const closeBtn = document.createElement('div');
+                        closeBtn.className = 'close-ad-btn';
+                        closeBtn.innerHTML = '&times;'; // HTML entity for 'x'
+
+                        const adIframe = document.createElement('iframe');
+
+                        // --- Define element behaviors ---
+                        adIframe.onload = function() {
+                            loader.style.display = 'none';
+                            adIframe.style.visibility = 'visible';
+                            
+                            // Timer for the close button starts AFTER ad loads
+                            setTimeout(function() {
+                                closeBtn.style.display = 'block';
+                            }, 10000); // 10000ms = 10 seconds
+                        };
+                        
+                        closeBtn.addEventListener('click', function() {
+                            containerElement.innerHTML = ''; // Clean up
+                            myFP.play();
+                        });
+
+                        adIframe.src = atob(encodedSrc);
+                        
+                        // --- Append elements to the container ---
+                        containerElement.innerHTML = '';
+                        adContainer.appendChild(loader);
+                        adContainer.appendChild(adText);
+                        adContainer.appendChild(closeBtn);
+                        adContainer.appendChild(adIframe);
+                        containerElement.appendChild(adContainer);
+                        
+                        return adContainer;
+                    }
+
+                    let adHasPlayed = false;
 
                     myFP.on('play', function() {
                         if (!adHasPlayed) {
-                            myFP.pause(); // Pause video to show ad
+                            myFP.pause();
                             
-                            const adOverlay = document.getElementById('ad-overlay');
-                            const adContainer = document.getElementById('ad-container');
-                            const adTimer = document.getElementById('ad-timer');
+                            const adPlaceholder = document.getElementById('ad-placeholder');
+                            const activeAdContainer = showAd(adPlaceholder, encodedUrl);
+                            activeAdContainer.style.display = 'block';
 
-                            adOverlay.style.display = 'block';
+                            // The old 5-second timer is removed. The ad is now closed manually.
 
-                            let timeLeft = 5;
-                            let countdownStarted = false;
-                            
-                            function startCountdown() {
-                                if (countdownStarted) return;
-                                countdownStarted = true;
-                                
-                                adTimer.textContent = `Ad ends in ${timeLeft}s`;
-                                
-                                const countdownInterval = setInterval(function() {
-                                    timeLeft--;
-                                    adTimer.textContent = `Ad ends in ${timeLeft}s`;
-
-                                    if (timeLeft <= 0) {
-                                        clearInterval(countdownInterval);
-                                        adOverlay.style.display = 'none';
-                                        myFP.play();
-                                    }
-                                }, 1000);
-                            }
-
-                            // Create and load JavaScript ad tag
-                            const script = document.createElement('script');
-                            
-                            // Convert your URL to a JavaScript ad tag format
-                            // This is a generic example - you'll need to adapt it to your specific ad network
-                            script.innerHTML = `
-                                (function() {
-                                    var adScript = document.createElement('script');
-                                    adScript.src = 'https://communicatefriction.com/jtmg4qm0x9.js?key=35b7fb6396e9a93ade4ccc35f748394e';
-                                    document.body.appendChild(adScript);
-                                    
-                                    // Create ad container for the ad network to target
-                                    var adDiv = document.createElement('div');
-                                    adDiv.id = 'ad-banner';
-                                    adDiv.style.width = '100%';
-                                    adDiv.style.height = '100%';
-                                    document.getElementById('ad-container').appendChild(adDiv);
-                                    
-                                    // Initialize ad (this part depends on your ad network)
-                                    window.adReady = function() {
-                                        console.log('Ad loaded successfully');
-                                        // Start countdown once ad is ready
-                                        startCountdown();
-                                    };
-                                    
-                                    // Fallback in case ad doesn't load
-                                    setTimeout(function() {
-                                        if (!countdownStarted) {
-                                            console.log('Ad loading timeout, starting countdown');
-                                            startCountdown();
-                                        }
-                                    }, 3000);
-                                })();
-                            `;
-                            
-                            // Alternative: If your ad network provides a specific JS tag
-                            // You would use something like this instead:
-                            /*
-                            script.src = "https://your-ad-network.com/tag.js";
-                            script.onload = function() {
-                                // Initialize ad after script loads
-                                window.showAd('ad-container', {
-                                    onReady: startCountdown,
-                                    onError: function() {
-                                        setTimeout(startCountdown, 1000);
-                                    }
-                                });
-                            };
-                            script.onerror = function() {
-                                setTimeout(startCountdown, 1000);
-                            };
-                            */
-                            
-                            document.head.appendChild(script);
-                            
-                            // Fallback: Start countdown if everything else fails
-                            setTimeout(startCountdown, 5000);
-                            
                             adHasPlayed = true;
                         }
                     });

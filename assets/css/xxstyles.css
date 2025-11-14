@@ -150,7 +150,8 @@ ul {
     max-width: 970px;
 }
 
-.ad-placeholder-large img {
+.ad-placeholder-large video {
+    display: block;
     width: 100%;
     height: auto;
     object-fit: cover;

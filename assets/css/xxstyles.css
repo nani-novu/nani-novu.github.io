@@ -147,14 +147,13 @@ ul {
 
 .ad-placeholder-large {
     width: 100%;
-    max-width: 370px;
+    max-width: 870px;
 }
 
 .ad-placeholder-large video {
     display: block;
-    width: 100%;
+    width: 100px;
     height: auto;
-    object-fit: cover;
 }
 
 /* --- VIDEO CONTENT --- */

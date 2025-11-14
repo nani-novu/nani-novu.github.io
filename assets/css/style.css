@@ -140,14 +140,15 @@ ul {
 
 /* --- AD PLACEHOLDER --- */
 .placeholder-section {
-    display: flex;
-    justify-content: center;
+    /* display: flex;      <-- DELETE THIS LINE */
+    /* justify-content: center; <-- DELETE THIS LINE */
     padding: 0 20px 30px;
 }
 
 .ad-placeholder-large {
     width: 100%;
     max-width: 970px;
+    margin: 0 auto;
 }
 
 .ad-placeholder-large video {

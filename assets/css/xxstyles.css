@@ -156,6 +156,12 @@ ul {
     height: auto;
 }
 
+.ad-placeholder-large img {
+    display: block;
+    width: 100px;
+    height: auto;
+}
+
 /* --- VIDEO CONTENT --- */
 .video-content {
     padding: 0 20px;

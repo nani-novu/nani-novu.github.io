@@ -152,7 +152,7 @@ ul {
 
 .ad-placeholder-large video {
     display: block;
-    width: 100%;
+    width: 300px;
     height: auto;
     object-fit: cover;
 }

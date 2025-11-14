@@ -35,7 +35,7 @@ ul {
 /* --- HEADER & NAVIGATION --- */
 .header {
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
-                        url('/assets/img/header.jpeg');
+                        url('/assets/img/header.webp');
             background-size: cover;
             background-position: center;
     display: flex;

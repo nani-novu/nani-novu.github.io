@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watching Nonrated | Nice Reels</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+    <style>
+        /* Styles for the ad overlay */
+        .video-player-wrapper {
+            position: relative; /* Crucial for positioning the overlay */
+        }
+        #ad-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            z-index: 1000; /* Ensure it's on top of the player */
+            display: none; /* Hidden by default */
+        }
+        #ad-overlay iframe {
+            width: 100%;
+            height: 100%;
+            border: none; /* Remove border from the iframe */
+        }
+        /* Style for the "AD" label */
+        #ad-label {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 2px 8px;
+            font-size: 12px;
+            font-family: sans-serif;
+            border-radius: 3px;
+            z-index: 1001; /* Above the iframe */
+        }
+        /* Style for the countdown timer */
+        #ad-timer {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 4px 8px;
+            font-size: 14px;
+            font-family: sans-serif;
+            border-radius: 3px;
+            z-index: 1001; /* Above the iframe */
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <!-- Your Header Content Remains the Same -->
+    </header>
+
+    <!-- Main Content for the Player Page -->
+    <main class="player-page-container">
+        
+        <!-- Main Video Section -->
+        <div class="main-video-section">
+            <div class="video-player-wrapper">
+                <div id="ad-placeholder"></div>
+
+                <script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
+
+<video id="video-id" controls>
+    <source src="https://cdv.naijaleakz.com/Nice%20Bitch%20fuckin.mp4" type="video/mp4" />
+</video>
+
+<script>
+    var myFP = fluidPlayer('video-id', {
+        "layoutControls": {
+            "autoPlay": false,
+            "mute": true
+        },
+        "vast": {
+            "vastTag": "https://nani-novu.github.io/vpaid-ad.xml",  // VPAID XML file URL
+            "skip": false,
+            "adTimeout": 3000,  // Timeout for loading the ad
+            "adPlaying": function() {
+                console.log("VPAID ad is playing");
+            }
+        }
+    });
+</script>
+
+            </div>
+            
+            <div class="video-info">
+                 <!-- Your Video Info Content Remains the Same -->
+            </div>
+        </div>
+
+        <!-- Related Videos Sidebar -->
+        <aside class="related-videos-section">
+            <!-- Your Related Videos Content Remains the Same -->
+        </aside>
+    </main>
+
+    <footer class="site-footer">
+        <!-- Your Footer Content Remains the Same -->
+    </footer>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
